@@ -1,0 +1,16 @@
+h2
+  = @task.title
+br
+  - if current_user && current_user == @task.user
+    = link_to "Edit task?", edit_task_path(@task)
+    i &nbsp; или &nbsp;
+    = link_to "Delete?", @task, method: :delete, data: {confirm: "Подтверждение удаления"}
+div
+  i Description:&nbsp;
+  = @task.description
+div
+  i State:&nbsp;
+  = @task.state
+div
+  i Owner:
+  = @task.user.email

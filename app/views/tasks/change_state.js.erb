@@ -1,0 +1,1 @@
+$("#task_<%= @task.id %>").replaceWith("<tr id='task_<%= @task.id %>'>" + '<%= j render 'task', task: @task %>' + "</tr>");

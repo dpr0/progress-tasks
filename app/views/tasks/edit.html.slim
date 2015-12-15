@@ -1,0 +1,4 @@
+h1 Edit task:
+= simple_form_for @task do |f|
+  = render partial: "form", locals: { f: f }
+  = f.button :submit, "Edit task", class: 'btn btn-success btn-sm'

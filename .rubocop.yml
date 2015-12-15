@@ -8,3 +8,8 @@ AllCops:
    - 'db/seeds.rb'
    - 'db/schema.rb'
    - 'vendor/bundle/**/*'
+
+Metrics/LineLength:
+  Max: 200
+Documentation:
+    Enabled: false

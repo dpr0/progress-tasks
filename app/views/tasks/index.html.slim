@@ -1,0 +1,15 @@
+- unless @tasks.empty?
+  div class="panel panel-default"
+    div class="panel-heading" Tasks:
+    table class="table"
+      tr
+        th Owner:
+        th Date:
+        th Task:
+        th _______:
+        th State:
+      - @tasks.each do |task|
+        tr id="task_#{task.id}"
+          = render 'task', task: task
+- else
+  h4 No tasks.

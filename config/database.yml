@@ -16,11 +16,11 @@ development:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: progress-tasks_development
+  database: progresstasks_development
   pool:     5
-  username: dimarikpro
+  username: postgres
   password: 111111
-  template: template0
+  #template: template0
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -44,18 +44,18 @@ test:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: progress-tasks_test
+  database: progresstasks_test
   pool:     5
-  username: dimarikpro
+  username: postgres
   password: 111111
-  template: template0
+  #template: template0
 
 production:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: progress-tasks_production
+  database: progresstasks_production
   pool:     5
-  username: dimarikpro
+  username: postgres
   password: 111111
-  template: template0
+  #template: template0
