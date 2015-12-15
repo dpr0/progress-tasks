@@ -13,13 +13,16 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_attributes(secure_params)
-    respond_with @user
+    if @user.update_attributes(secure_params)
+      redirect_to users_path, notice: 'User updated.'
+    else
+      redirect_to users_path, alert: 'Unable to update user.'
+    end
   end
 
   def destroy
-    @user.destroy if @user.role == 'admin'
-    respond_with @user
+    @user.destroy # if current_user.role == 'admin'
+    redirect_to users_path, notice: 'User deleted.'
   end
 
   private
