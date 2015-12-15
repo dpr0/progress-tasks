@@ -17,7 +17,7 @@ gem 'turbolinks'
 gem 'responders'
 gem 'cancancan'
 gem 'whenever'
-#gem 'rails_12factor'
+# gem 'rails_12factor'
 gem 'workflow'
 
 group :development do
@@ -32,6 +32,7 @@ group :development do
   gem 'rails_apps_testing'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
+  gem 'faker'
 end
 
 group :development, :test do

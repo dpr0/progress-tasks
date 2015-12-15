@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-
   describe 'GET #index' do
     let(:users) { create_list(:user, 2) }
     sign_in_admin
