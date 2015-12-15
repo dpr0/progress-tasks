@@ -3,6 +3,5 @@ FactoryGirl.define do
     title
     description
     state 'new'
-    user
   end
 end

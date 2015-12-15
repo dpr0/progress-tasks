@@ -1,7 +1,7 @@
 h2
   = @task.title
 br
-  - if current_user && current_user == @task.user
+  - if @task.users.include?(current_user)
     = link_to "Edit task?", edit_task_path(@task)
     i &nbsp; или &nbsp;
     = link_to "Delete?", @task, method: :delete, data: {confirm: "Подтверждение удаления"}
@@ -12,5 +12,9 @@ div
   i State:&nbsp;
   = @task.state
 div
-  i Owner:
-  = @task.user.email
+  i Workers:
+  - if @task.users.empty?
+    i nobody
+  - else
+    - @task.users.each do |user|
+      li = user.email

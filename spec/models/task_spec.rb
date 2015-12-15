@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   let(:user) { create(:user) }
-  let!(:task) { create(:task, user: user) }
+  let!(:task) { create(:task) }
 
   it 'task.state' do
     expect(task.state).to eq 'new'

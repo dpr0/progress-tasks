@@ -29,7 +29,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy if @task.user_id == current_user.id
+    @task.destroy if @task.users.include?(current_user)
     respond_with @task
   end
 
@@ -45,6 +45,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :state).merge(user_id: current_user.id)
+    params.require(:task).permit(:title, :description, :state, user_ids: []) # .merge(user_id: current_user.id)
   end
 end

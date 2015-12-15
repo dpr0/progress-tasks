@@ -1,2 +1,5 @@
 = f.input :title, label: "Title:"
 = f.input :description, label: "Description:"
+/= f.collection_select :user, User.all, :id, :email, {}, { multiple: true }
+= f.association :users, collection: User.all, label_method: :email,
+                label: 'Users:', input_html: { multiple: true }

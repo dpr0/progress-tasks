@@ -1,13 +1,9 @@
-td
-  - if current_user && current_user == task.user
-    i My task
-  - else
-    = task.user.email
+td = task.users.size
 td = task.created_at.strftime("%d.%m.%y")
 td = link_to (task.title), task_path(task)
 td = task.state
 td
-  - if current_user && current_user == task.user
+  - if task.users.include?(current_user)
     - if task.state == 'new'
       = link_to "Start task!", task_change_state_path(task), method: :post, remote: true, class: 'btn btn-default btn-xs start-task-link'
     - else

@@ -6,9 +6,14 @@ feature 'Create task.' do
   revision_button = 'Remake!'
   given(:user)  { create(:user) }
   given(:user2) { create(:user) }
-  given!(:task) { create(:task, user: user) }
-  given(:task2) { create(:task, user: user2) }
-  given(:tasks) { create_list(:task, 5, user: user) }
+  given!(:task) { create(:task) }
+  given(:task2) { create(:task) }
+  given(:tasks) { create_list(:task, 5) }
+
+  background do
+    task.users << user
+    task2.users << user2
+  end
 
   scenario 'Authenticated user creates task' do
     sign_in(user)
@@ -20,6 +25,17 @@ feature 'Create task.' do
     # save_and_open_page
     expect(page).to have_content 'Description: й й й й й'
     expect(page).to have_content 'State: new'
+  end
+
+  scenario 'Authenticated user edit task' do
+    sign_in(user)
+    visit task_path(task)
+    click_on 'Edit task?'
+    select 'user3@progress.ru', from: 'Users:'
+    select 'user4@progress.ru', from: 'Users:'
+    click_on 'Edit task'
+    expect(page).to have_content 'user3@progress.ru'
+    expect(page).to have_content 'user4@progress.ru'
   end
 
   scenario 'Non-authenticated user try to create task' do
@@ -38,7 +54,8 @@ feature 'Create task.' do
     sign_in(user)
     visit task_path(task)
     click_on 'Delete?'
-    expect(page).to have_content 'No tasks.'
+    # save_and_open_page
+    expect(page).to have_content 'Tasks:'
   end
 
   scenario 'user can start someone task', js: true do

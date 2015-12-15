@@ -3,8 +3,13 @@ require 'rails_helper'
 RSpec.describe TasksController, type: :controller do
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
-  let(:task) { create(:task, user: user) }
-  let(:task2) { create(:task, user: user2) }
+  let(:task) { create(:task) }
+  let(:task2) { create(:task) }
+
+  before do
+    task.users << user
+    task2.users << user2
+  end
 
   describe 'POST #change_state' do
     sign_in_user
@@ -25,8 +30,12 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe 'GET #index' do
-    let(:tasks) { create_list(:task, 5, user: user) }
-    before { get :index }
+    let(:tasks) { create_list(:task, 5) }
+    before do
+      tasks << task
+      tasks << task2
+      get :index
+    end
     it 'populates an array of all tasks' do
       expect(assigns(:tasks)).to match_array(tasks)
     end
@@ -60,7 +69,7 @@ RSpec.describe TasksController, type: :controller do
   describe 'GET #edit' do
     sign_in_user
     before do
-      task.update!(user: @user)
+      task.users << @user
       get :edit, id: task
     end
     it 'assings the requested task to @task' do
@@ -73,10 +82,8 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
-    let(:create_task) { post :create, task: attributes_for(:task) }
     it 'task assigns to user' do
-      post :create, task: attributes_for(:task)
-      expect(assigns(:task).user_id).to eq subject.current_user.id
+      expect { post :create, task: attributes_for(:task) }.to change(Task, :count).by(1)
     end
     it 'redirects to show view' do
       post :create, task: attributes_for(:task)
@@ -86,7 +93,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-    before { task.update!(user: @user) }
+    before { task.users << @user }
     it 'assigns the requested task to @task' do
       patch :update, id: task, task: attributes_for(:task)
       expect(assigns(:task)).to eq task
@@ -105,7 +112,8 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    let!(:task1) { create(:task, user: subject.current_user) }
+    let!(:task1) { create(:task) }
+    before { task1.users << @user }
     it 'deletes task' do
       expect { delete :destroy, id: task1 }.to change(Task, :count).by(-1)
     end

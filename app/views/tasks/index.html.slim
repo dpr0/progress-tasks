@@ -3,11 +3,11 @@
     div class="panel-heading" Tasks:
     table class="table"
       tr
-        th Owner:
-        th Date:
+        th Workers:
+        th Created at:
         th Task:
-        th _______:
         th State:
+        th
       - @tasks.each do |task|
         tr id="task_#{task.id}"
           = render 'task', task: task
